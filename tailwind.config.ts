@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,15 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				birthday: {
+					pink: '#FFDEE2',
+					peach: '#FDE1D3',
+					blue: '#D3E4FD',
+					purple: '#E5DEFF',
+					yellow: '#FEF7CD',
+					green: '#F2FCE2',
+					gold: '#FFD700',
 				}
 			},
 			borderRadius: {
@@ -84,11 +94,56 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0px)' },
+					'50%': { transform: 'translateY(-20px)' }
+				},
+				'sway': {
+					'0%, 100%': { transform: 'rotate(-3deg)' },
+					'50%': { transform: 'rotate(3deg)' }
+				},
+				'confetti-fall': {
+					'0%': { transform: 'translateY(-100vh) rotate(0deg)', opacity: '1' },
+					'100%': { transform: 'translateY(100vh) rotate(360deg)', opacity: '0' }
+				},
+				'balloon-float': {
+					'0%': { transform: 'translateY(100vh) translateX(0px)' },
+					'100%': { transform: 'translateY(-100vh) translateX(var(--balloon-x))' }
+				},
+				'pop': {
+					'0%': { transform: 'scale(1)' },
+					'50%': { transform: 'scale(1.4)' },
+					'100%': { transform: 'scale(0)', opacity: '0' }
+				},
+				'fade-in': {
+					'0%': { opacity: '0', transform: 'translateY(20px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' }
+				},
+				'heart-beat': {
+					'0%, 100%': { transform: 'scale(1)' },
+					'50%': { transform: 'scale(1.1)' }
+				},
+				'flame': {
+					'0%, 100%': { transform: 'scale(1) rotate(-2deg)', opacity: '0.9' },
+					'50%': { transform: 'scale(1.1) rotate(2deg)', opacity: '1' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'float': 'float 6s ease-in-out infinite',
+				'sway': 'sway 4s ease-in-out infinite',
+				'confetti-fall': 'confetti-fall 4s linear forwards',
+				'balloon-float': 'balloon-float 15s linear forwards',
+				'pop': 'pop 0.3s ease-out forwards',
+				'fade-in': 'fade-in 1s ease-out forwards',
+				'heart-beat': 'heart-beat 1.5s ease-in-out infinite',
+				'flame': 'flame 2s ease-in-out infinite'
+			},
+			fontFamily: {
+				'cute': ['Comfortaa', 'sans-serif'],
+				'birthday': ['Pacifico', 'cursive']
 			}
 		}
 	},
