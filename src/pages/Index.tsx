@@ -10,6 +10,7 @@ import { useToast } from '@/components/ui/use-toast';
 
 const Index = () => {
   const [showConfetti, setShowConfetti] = useState(false);
+  const [showManyBalloons, setShowManyBalloons] = useState(false);
   const [message, setMessage] = useState('');
   const [birthdayWishes, setBirthdayWishes] = useState<string[]>([
     "May all your wishes come true!",
@@ -22,10 +23,10 @@ const Index = () => {
     // Initial confetti burst when page loads
     setTimeout(() => {
       setShowConfetti(true);
-      // Hide confetti after 8 seconds
+      // Hide confetti after 5 seconds
       setTimeout(() => {
         setShowConfetti(false);
-      }, 8000);
+      }, 5000);
     }, 1000);
     
     // Birthday messages typing effect
@@ -46,6 +47,8 @@ const Index = () => {
   
   const handleCandlesBlow = () => {
     setShowConfetti(true);
+    setShowManyBalloons(true);
+    
     // Hide confetti after 5 seconds
     setTimeout(() => {
       setShowConfetti(false);
@@ -88,14 +91,14 @@ const Index = () => {
 
   return (
     <div className="min-h-screen pb-20">
-      <Balloons count={15} />
+      <Balloons count={showManyBalloons ? 20 : 8} showMany={showManyBalloons} />
       {showConfetti && <Confetti count={150} />}
       
       <header className="pt-16 pb-12 text-center relative overflow-hidden">
-        <h1 className="text-5xl md:text-6xl font-birthday text-primary animate-float mb-4">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-birthday text-primary animate-float mb-4 px-4">
           {message || "Happy Birthday!"}
         </h1>
-        <p className="text-2xl text-accent-foreground animate-fade-in opacity-0" style={{ animationDelay: '2s', animationFillMode: 'forwards' }}>
+        <p className="text-xl sm:text-2xl text-accent-foreground animate-fade-in opacity-0 px-4" style={{ animationDelay: '2s', animationFillMode: 'forwards' }}>
           Today is all about you!
         </p>
       </header>

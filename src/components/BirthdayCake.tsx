@@ -7,13 +7,27 @@ interface BirthdayCakeProps {
 }
 
 const BirthdayCake: React.FC<BirthdayCakeProps> = ({ onCandlesBlow }) => {
-  const [candlesLit, setCandlesLit] = useState(true);
+  const [candlesLit, setCandlesLit] = useState(false);
   const [blowAttempts, setBlowAttempts] = useState(0);
   const { toast } = useToast();
 
+  // Start with unlit candles and light them after component mounts
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCandlesLit(true);
+      toast({
+        title: "Candles Lit! 🔥",
+        description: "Make a wish and blow the candles!",
+        duration: 2000,
+      });
+    }, 1500);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   const handleBlow = () => {
     if (candlesLit) {
-      if (blowAttempts >= 2) {
+      if (blowAttempts >= 1) {
         setCandlesLit(false);
         onCandlesBlow?.();
         
@@ -87,7 +101,12 @@ const BirthdayCake: React.FC<BirthdayCakeProps> = ({ onCandlesBlow }) => {
           <div className="flex justify-around">
             {Array.from({ length: 2 }).map((_, i) => (
               <div key={i} className="cake-candle">
-                {candlesLit && <div className="absolute top-[-10px] left-[4px] w-0 h-0 animate-flame"></div>}
+                {candlesLit && (
+                  <div className="absolute top-[-15px] left-[2px] w-4 h-6">
+                    <div className="w-0 h-0 animate-flame"></div>
+                    <div className="absolute top-0 left-0 w-4 h-6 bg-yellow-500 opacity-20 rounded-full animate-pulse"></div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -97,10 +116,20 @@ const BirthdayCake: React.FC<BirthdayCakeProps> = ({ onCandlesBlow }) => {
         <div className="absolute bottom-48 left-1/2 transform -translate-x-1/2">
           <div className="flex gap-6">
             <div className="cake-candle">
-              {candlesLit && <div className="absolute top-[-10px] left-[4px] w-0 h-0 animate-flame"></div>}
+              {candlesLit && (
+                <div className="absolute top-[-15px] left-[2px] w-4 h-6">
+                  <div className="absolute top-[-10px] left-[4px] w-0 h-0 animate-flame"></div>
+                  <div className="absolute top-0 left-0 w-4 h-6 bg-yellow-500 opacity-20 rounded-full animate-pulse"></div>
+                </div>
+              )}
             </div>
             <div className="cake-candle">
-              {candlesLit && <div className="absolute top-[-10px] left-[4px] w-0 h-0 animate-flame"></div>}
+              {candlesLit && (
+                <div className="absolute top-[-15px] left-[2px] w-4 h-6">
+                  <div className="absolute top-[-10px] left-[4px] w-0 h-0 animate-flame"></div>
+                  <div className="absolute top-0 left-0 w-4 h-6 bg-yellow-500 opacity-20 rounded-full animate-pulse"></div>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -4,9 +4,10 @@ import { useToast } from '@/components/ui/use-toast';
 
 interface BalloonProps {
   count?: number;
+  showMany?: boolean;
 }
 
-const Balloons: React.FC<BalloonProps> = ({ count = 10 }) => {
+const Balloons: React.FC<BalloonProps> = ({ count = 10, showMany = false }) => {
   const [poppedBalloons, setPoppedBalloons] = useState<number[]>([]);
   const { toast } = useToast();
   
@@ -41,9 +42,11 @@ const Balloons: React.FC<BalloonProps> = ({ count = 10 }) => {
     }
   };
 
+  const actualCount = showMany ? count : Math.min(4, count);
+
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-      {Array.from({ length: count }).map((_, index) => {
+      {Array.from({ length: actualCount }).map((_, index) => {
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
         const randomX = Math.random() * 100 - 50; // -50 to 50
         const randomDelay = Math.random() * 5;
