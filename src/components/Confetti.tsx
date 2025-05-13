@@ -59,7 +59,8 @@ const Confetti: React.FC<ConfettiProps> = ({ count = 150, active = true }) => {
               height: shape === 'star' || shape === 'heart' ? '12px' : `${8 + (conf.size * 8)}px`,
               transform: `scale(${conf.size}) rotate(${conf.rotation}deg)`,
               opacity: 0.8 + (conf.size * 0.2),
-              '--delay': conf.delay,
+              animationDelay: `${conf.delay}s`,
+              animationDuration: `${3 + Math.random() * 4}s`,
               borderRadius: shape === 'rounded-full' ? '50%' : 
                           shape === 'rounded-sm' ? '4px' : '0',
               clipPath: shape === 'star' ? 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)' :

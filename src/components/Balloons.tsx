@@ -42,7 +42,7 @@ const Balloons: React.FC<BalloonProps> = ({ count = 10, showMany = false }) => {
     }
   };
 
-  // For initial load, concentrate balloons at the top of the screen
+  // For initial load, show fewer balloons concentrated at the top of the screen
   const actualCount = showMany ? count : Math.min(count, 4);
 
   return (

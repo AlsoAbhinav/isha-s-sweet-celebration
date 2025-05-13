@@ -13,6 +13,7 @@ const Index = () => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [showManyBalloons, setShowManyBalloons] = useState(false);
   const [message, setMessage] = useState('');
+  const [showContent, setShowContent] = useState(false);
   const [birthdayWishes, setBirthdayWishes] = useState<string[]>([
     "May all your wishes come true!",
     "You're amazing and beautiful!",
@@ -21,16 +22,16 @@ const Index = () => {
   const { toast } = useToast();
   
   useEffect(() => {
-    // Initial confetti burst when page loads
-    setTimeout(() => {
-      setShowConfetti(true);
-      // Hide confetti after 5 seconds
-      setTimeout(() => {
-        setShowConfetti(false);
-      }, 5000);
-    }, 1000);
+    // No initial confetti or typing animation until candles are blown
+    // The page starts with only the cake visible
+  }, []);
+  
+  const handleCandlesBlow = () => {
+    setShowConfetti(true);
+    setShowManyBalloons(true);
+    setShowContent(true); // Show all content after candles are blown
     
-    // Birthday messages typing effect
+    // Start typing animation after candles are blown
     const fullMessage = "Happy 22nd Birthday, Isha! 🎂✨";
     let index = 0;
     
@@ -42,13 +43,6 @@ const Index = () => {
         clearInterval(typingInterval);
       }
     }, 100);
-    
-    return () => clearInterval(typingInterval);
-  }, []);
-  
-  const handleCandlesBlow = () => {
-    setShowConfetti(true);
-    setShowManyBalloons(true);
     
     // Hide confetti after 5 seconds
     setTimeout(() => {
@@ -92,10 +86,10 @@ const Index = () => {
 
   return (
     <div className="min-h-screen pb-20 bg-gradient-to-br from-birthday-pink/40 to-white">
-      <Balloons count={showManyBalloons ? 20 : 8} showMany={showManyBalloons} />
+      <Balloons count={showManyBalloons ? 20 : 4} showMany={showManyBalloons} />
       {showConfetti && <Confetti count={150} />}
       
-      <header className="pt-20 pb-16 text-center relative overflow-hidden">
+      <header className={`pt-20 pb-16 text-center relative overflow-hidden ${showContent ? 'animate-fade-in' : 'opacity-0'}`}>
         <div className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-birthday-purple/30 to-transparent z-[-1]" />
         <h1 className="text-5xl sm:text-6xl md:text-7xl font-birthday text-primary animate-float mb-6 px-4 drop-shadow-sm">
           {message || "Happy Birthday!"}
@@ -113,42 +107,46 @@ const Index = () => {
             </div>
           </section>
           
-          <section className="mb-24">
-            <MessageCard name="Isha" onCardOpen={handleCardOpen} />
-          </section>
-          
-          <section className="mb-24">
-            <div className="glass-card">
-              <Gallery title="Cherished Moments" />
-            </div>
-          </section>
-          
-          <section className="mb-24">
-            <div className="rounded-2xl p-8 shadow-lg bg-gradient-to-br from-white/90 to-birthday-blue/30 backdrop-blur-sm">
-              <h2 className="text-3xl md:text-4xl font-birthday text-center mb-8 text-primary drop-shadow-sm">Birthday Wishes</h2>
+          {showContent && (
+            <>
+              <section className="mb-24 animate-fade-in" style={{ animationDelay: '0.5s' }}>
+                <MessageCard name="Isha" onCardOpen={handleCardOpen} />
+              </section>
               
-              <div className="space-y-6 mb-8">
-                {birthdayWishes.map((wish, index) => (
-                  <div 
-                    key={index} 
-                    className="p-6 rounded-xl bg-white/80 backdrop-blur-sm shadow-sm animate-fade-in border border-birthday-purple/20"
-                    style={{ animationDelay: `${index * 0.2}s` }}
-                  >
-                    <p className="text-center font-cute text-gray-700">"{wish}"</p>
+              <section className="mb-24 animate-fade-in" style={{ animationDelay: '1s' }}>
+                <div className="glass-card">
+                  <Gallery title="Cherished Moments" />
+                </div>
+              </section>
+              
+              <section className="mb-24 animate-fade-in" style={{ animationDelay: '1.5s' }}>
+                <div className="rounded-2xl p-8 shadow-lg bg-gradient-to-br from-white/90 to-birthday-blue/30 backdrop-blur-sm">
+                  <h2 className="text-3xl md:text-4xl font-birthday text-center mb-8 text-primary drop-shadow-sm">Birthday Wishes</h2>
+                  
+                  <div className="space-y-6 mb-8">
+                    {birthdayWishes.map((wish, index) => (
+                      <div 
+                        key={index} 
+                        className="p-6 rounded-xl bg-white/80 backdrop-blur-sm shadow-sm animate-fade-in border border-birthday-purple/20"
+                        style={{ animationDelay: `${index * 0.2}s` }}
+                      >
+                        <p className="text-center font-cute text-gray-700">"{wish}"</p>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-              
-              <div className="flex justify-center">
-                <Button 
-                  onClick={handleAddWish}
-                  className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold px-6 py-2 text-base rounded-full shadow-md hover:shadow-lg transition-all"
-                >
-                  Add a Birthday Wish 🎁
-                </Button>
-              </div>
-            </div>
-          </section>
+                  
+                  <div className="flex justify-center">
+                    <Button 
+                      onClick={handleAddWish}
+                      className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold px-6 py-2 text-base rounded-full shadow-md hover:shadow-lg transition-all"
+                    >
+                      Add a Birthday Wish 🎁
+                    </Button>
+                  </div>
+                </div>
+              </section>
+            </>
+          )}
         </div>
       </div>
       
