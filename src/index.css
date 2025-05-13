@@ -85,10 +85,10 @@
 
   body {
     @apply bg-birthday-pink bg-opacity-40 text-foreground font-cute;
-    background-image: radial-gradient(rgba(255,222,226,0.8) 1px, transparent 1px),
-                      radial-gradient(rgba(211,228,253,0.6) 1px, transparent 1px);
-    background-size: 40px 40px, 30px 30px;
-    background-position: 0 0, 20px 20px;
+    background-image: radial-gradient(rgba(255,222,226,0.5) 1px, transparent 1px),
+                      radial-gradient(rgba(211,228,253,0.4) 1px, transparent 1px);
+    background-size: 50px 50px, 40px 40px;
+    background-position: 0 0, 25px 25px;
   }
 
   h1, h2, h3 {
@@ -102,6 +102,7 @@
     height: 70px;
     border-radius: 50%;
     position: relative;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
   }
 
   .balloon:before {
@@ -118,12 +119,12 @@
   .balloon:after {
     content: '';
     position: absolute;
-    bottom: -20px;
+    bottom: -25px;
     left: 50%;
     transform: translateX(-50%);
-    width: 2px;
-    height: 40px;
-    background: rgba(0,0,0,0.2);
+    width: 1px;
+    height: 50px;
+    background: rgba(0,0,0,0.15);
     pointer-events: none;
   }
 
@@ -170,7 +171,7 @@
   }
 
   .gallery-image {
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
     cursor: pointer;
   }
   
@@ -178,17 +179,28 @@
     transform: scale(1.05);
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   }
+
+  .glass-card {
+    @apply rounded-2xl overflow-hidden bg-white/60 backdrop-blur-sm p-6 shadow-lg border border-white/40;
+  }
 }
 
-@keyframes float-balloon {
+@keyframes float-elegant {
   0% {
-    transform: translateY(110vh) translateX(0);
+    transform: translateY(20vh) translateX(0) scale(0.8);
+    opacity: 0.8;
   }
-  50% {
-    transform: translateY(50vh) translateX(var(--balloon-x));
+  20% {
+    transform: translateY(15vh) translateX(var(--balloon-x)) scale(0.9);
+    opacity: 0.9;
+  }
+  80% {
+    transform: translateY(-15vh) translateX(calc(var(--balloon-x) * -0.5)) scale(1);
+    opacity: 1;
   }
   100% {
-    transform: translateY(-20vh) translateX(0);
+    transform: translateY(-30vh) translateX(0) scale(0.9);
+    opacity: 0.7;
   }
 }
 
@@ -203,4 +215,30 @@
     opacity: 1;
     box-shadow: 0 0 12px rgba(255, 165, 0, 0.8), 0 0 16px rgba(255, 100, 0, 0.6);
   }
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heart-beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
 }

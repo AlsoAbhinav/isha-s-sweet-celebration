@@ -42,6 +42,7 @@ const Balloons: React.FC<BalloonProps> = ({ count = 10, showMany = false }) => {
     }
   };
 
+  // For initial load, concentrate balloons at the top of the screen
   const actualCount = showMany ? count : Math.min(count, 4);
 
   return (
@@ -52,6 +53,9 @@ const Balloons: React.FC<BalloonProps> = ({ count = 10, showMany = false }) => {
         const randomDelay = Math.random() * 8; // Increased delay variation
         const randomDuration = 15 + Math.random() * 20; // Randomized duration between 15-35s
         const randomLeft = Math.random() * 80 + 10; // 10% to 90% from left
+        const initialTop = showMany ? 
+          Math.random() * 100 : // Random starting position for many balloons
+          Math.random() * 20; // Concentrate at top for initial load
         const isPopped = poppedBalloons.includes(index);
         
         return (
@@ -62,11 +66,14 @@ const Balloons: React.FC<BalloonProps> = ({ count = 10, showMany = false }) => {
             }`}
             style={{
               left: `${randomLeft}%`,
+              top: `${initialTop}%`,
               '--balloon-x': `${randomX}px`,
               '--delay': `${randomDelay}s`,
               '--duration': `${randomDuration}s`,
               opacity: isPopped ? 0 : 1,
-              animation: isPopped ? 'pop 0.3s ease-out forwards' : `float-balloon ${randomDuration}s ease-in-out ${randomDelay}s infinite`,
+              animation: isPopped ? 'pop 0.3s ease-out forwards' : `float-elegant ${randomDuration}s ease-in-out ${randomDelay}s infinite`,
+              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+              transform: 'scale(1.05)',
             } as React.CSSProperties}
             onClick={() => handlePopBalloon(index)}
           />
