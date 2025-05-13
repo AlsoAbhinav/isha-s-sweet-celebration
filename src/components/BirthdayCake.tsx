@@ -55,16 +55,16 @@ const BirthdayCake: React.FC<BirthdayCakeProps> = ({ onCandlesBlow }) => {
 
   return (
     <div className="flex flex-col items-center mb-8">
-      <div className="w-64 h-48 relative mb-4">
-        {/* Cake base */}
-        <div className="absolute bottom-0 w-full h-24 bg-birthday-peach rounded-lg"></div>
-        <div className="absolute bottom-24 w-full h-12 bg-birthday-pink rounded-t-lg"></div>
-        <div className="absolute bottom-36 w-full h-12 bg-birthday-peach rounded-t-lg"></div>
+      <div className="w-72 h-64 relative mb-6">
+        {/* Cake base - increased width and height */}
+        <div className="absolute bottom-0 w-full h-28 bg-birthday-peach rounded-lg"></div>
+        <div className="absolute bottom-28 w-full h-16 bg-birthday-pink rounded-t-lg"></div>
+        <div className="absolute bottom-44 w-full h-16 bg-birthday-peach rounded-t-lg"></div>
         
         {/* Frosting */}
-        <div className="absolute bottom-36 w-full">
+        <div className="absolute bottom-44 w-full">
           <div className="flex justify-around">
-            {Array.from({ length: 8 }).map((_, i) => (
+            {Array.from({ length: 10 }).map((_, i) => (
               <div 
                 key={i} 
                 className="w-8 h-4 bg-white rounded-t-full"
@@ -74,9 +74,9 @@ const BirthdayCake: React.FC<BirthdayCakeProps> = ({ onCandlesBlow }) => {
         </div>
         
         {/* Decorations */}
-        <div className="absolute bottom-12 w-full px-4">
+        <div className="absolute bottom-14 w-full px-4">
           <div className="flex justify-around">
-            {Array.from({ length: 5 }).map((_, i) => (
+            {Array.from({ length: 6 }).map((_, i) => (
               <div 
                 key={i} 
                 className="w-3 h-3 bg-birthday-purple rounded-full"
@@ -85,9 +85,9 @@ const BirthdayCake: React.FC<BirthdayCakeProps> = ({ onCandlesBlow }) => {
           </div>
         </div>
         
-        <div className="absolute bottom-24 w-full px-6">
+        <div className="absolute bottom-30 w-full px-6">
           <div className="flex justify-around">
-            {Array.from({ length: 4 }).map((_, i) => (
+            {Array.from({ length: 5 }).map((_, i) => (
               <div 
                 key={i} 
                 className="w-3 h-3 bg-birthday-blue rounded-full"
@@ -97,7 +97,7 @@ const BirthdayCake: React.FC<BirthdayCakeProps> = ({ onCandlesBlow }) => {
         </div>
         
         {/* Candles */}
-        <div className="absolute bottom-48 w-full px-8">
+        <div className="absolute bottom-64 w-full px-8">
           <div className="flex justify-around">
             {Array.from({ length: 2 }).map((_, i) => (
               <div key={i} className="cake-candle">
@@ -113,7 +113,7 @@ const BirthdayCake: React.FC<BirthdayCakeProps> = ({ onCandlesBlow }) => {
         </div>
         
         {/* Number 22 candles */}
-        <div className="absolute bottom-48 left-1/2 transform -translate-x-1/2">
+        <div className="absolute bottom-64 left-1/2 transform -translate-x-1/2">
           <div className="flex gap-6">
             <div className="cake-candle">
               {candlesLit && (

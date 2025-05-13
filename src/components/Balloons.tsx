@@ -9,6 +9,7 @@ interface BalloonProps {
 
 const Balloons: React.FC<BalloonProps> = ({ count = 10, showMany = false }) => {
   const [poppedBalloons, setPoppedBalloons] = useState<number[]>([]);
+  const [visibleBalloons, setVisibleBalloons] = useState<number>(0);
   const { toast } = useToast();
   
   const colors = [
@@ -19,6 +20,27 @@ const Balloons: React.FC<BalloonProps> = ({ count = 10, showMany = false }) => {
     'bg-birthday-peach',
     'bg-birthday-green',
   ];
+
+  // Control balloon sequential appearance when showMany is toggled
+  useEffect(() => {
+    if (showMany) {
+      let currentCount = 0;
+      const totalBalloons = count;
+      const interval = setInterval(() => {
+        if (currentCount < totalBalloons) {
+          setVisibleBalloons(prev => prev + 1);
+          currentCount++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 200); // Add a new balloon every 200ms for a smooth entrance
+      
+      return () => clearInterval(interval);
+    } else {
+      // Initial state - just a few balloons
+      setVisibleBalloons(Math.min(count, 4));
+    }
+  }, [showMany, count]);
   
   const handlePopBalloon = (index: number) => {
     if (!poppedBalloons.includes(index)) {
@@ -42,20 +64,25 @@ const Balloons: React.FC<BalloonProps> = ({ count = 10, showMany = false }) => {
     }
   };
 
-  // For initial load, show fewer balloons concentrated at the top of the screen
-  const actualCount = showMany ? count : Math.min(count, 4);
+  // Calculate actual number of balloons to show
+  const actualCount = showMany ? visibleBalloons : Math.min(count, 4);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
       {Array.from({ length: actualCount }).map((_, index) => {
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
-        const randomX = Math.random() * 60 - 30; // -30 to 30, reduced range for more natural movement
-        const randomDelay = Math.random() * 8; // Increased delay variation
-        const randomDuration = 15 + Math.random() * 20; // Randomized duration between 15-35s
-        const randomLeft = Math.random() * 80 + 10; // 10% to 90% from left
+        const randomX = Math.random() * 30 - 15; // -15 to 15, reduced for more natural movement
+        const randomDuration = 20 + Math.random() * 20; // 20-40s for slower, more natural float
+        const randomLeft = 10 + (index % 5) * 20 + (Math.random() * 10 - 5); // More evenly distributed
+        
+        // For staggered entrance, start at different bottom positions
         const initialTop = showMany ? 
-          Math.random() * 100 : // Random starting position for many balloons
-          Math.random() * 20; // Concentrate at top for initial load
+          95 + (index * 2) : // Start from bottom for the animation
+          Math.random() * 20; // Concentrate at top for initial display
+        
+        // Stagger the delay based on the index when showing many
+        const randomDelay = showMany ? Math.min(index * 0.2, 5) : Math.random() * 3;
+        
         const isPopped = poppedBalloons.includes(index);
         
         return (
@@ -71,7 +98,9 @@ const Balloons: React.FC<BalloonProps> = ({ count = 10, showMany = false }) => {
               '--delay': `${randomDelay}s`,
               '--duration': `${randomDuration}s`,
               opacity: isPopped ? 0 : 1,
-              animation: isPopped ? 'pop 0.3s ease-out forwards' : `float-elegant ${randomDuration}s ease-in-out ${randomDelay}s infinite`,
+              animation: isPopped ? 'pop 0.3s ease-out forwards' : 
+                      showMany ? `float-natural ${randomDuration}s ease-in-out ${randomDelay}s infinite` : 
+                      `float-elegant ${randomDuration}s ease-in-out ${randomDelay}s infinite`,
               boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
               transform: 'scale(1.05)',
             } as React.CSSProperties}
