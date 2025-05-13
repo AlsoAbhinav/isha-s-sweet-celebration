@@ -42,28 +42,31 @@ const Balloons: React.FC<BalloonProps> = ({ count = 10, showMany = false }) => {
     }
   };
 
-  const actualCount = showMany ? count : Math.min(4, count);
+  const actualCount = showMany ? count : Math.min(count, 4);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
       {Array.from({ length: actualCount }).map((_, index) => {
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
-        const randomX = Math.random() * 100 - 50; // -50 to 50
-        const randomDelay = Math.random() * 5;
-        const randomLeft = Math.random() * 90 + 5; // 5% to 95% from left
+        const randomX = Math.random() * 60 - 30; // -30 to 30, reduced range for more natural movement
+        const randomDelay = Math.random() * 8; // Increased delay variation
+        const randomDuration = 15 + Math.random() * 20; // Randomized duration between 15-35s
+        const randomLeft = Math.random() * 80 + 10; // 10% to 90% from left
         const isPopped = poppedBalloons.includes(index);
         
         return (
           <div
             key={index}
             className={`balloon pointer-events-auto cursor-pointer ${randomColor} ${
-              isPopped ? 'animate-pop' : 'animate-balloon-float'
+              isPopped ? 'animate-pop' : ''
             }`}
             style={{
               left: `${randomLeft}%`,
               '--balloon-x': `${randomX}px`,
-              '--delay': randomDelay,
+              '--delay': `${randomDelay}s`,
+              '--duration': `${randomDuration}s`,
               opacity: isPopped ? 0 : 1,
+              animation: isPopped ? 'pop 0.3s ease-out forwards' : `float-balloon ${randomDuration}s ease-in-out ${randomDelay}s infinite`,
             } as React.CSSProperties}
             onClick={() => handlePopBalloon(index)}
           />

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Balloons from '@/components/Balloons';
 import Confetti from '@/components/Confetti';
@@ -7,6 +6,7 @@ import BirthdayCake from '@/components/BirthdayCake';
 import Gallery from '@/components/Gallery';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
+import { Heart } from 'lucide-react';
 
 const Index = () => {
   const [showConfetti, setShowConfetti] = useState(false);
@@ -146,9 +146,12 @@ const Index = () => {
         </div>
       </div>
       
-      <footer className="text-center py-6 text-sm text-gray-500">
-        <p className="animate-sway inline-block font-birthday text-base">
-          Made with ❤️ for Isha's 22nd Birthday
+      <footer className="text-center py-8 text-sm">
+        <p className="animate-sway inline-block font-birthday text-base mb-2">
+          Made with <span className="inline-flex items-center mx-1"><Heart className="h-4 w-4 fill-red-500 text-red-500" /></span> by Abhinav for Isha's 22nd Birthday
+        </p>
+        <p className="text-gray-500 font-cute text-sm">
+          May all your wishes come true! ✨
         </p>
       </footer>
     </div>

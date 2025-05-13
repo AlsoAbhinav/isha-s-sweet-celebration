@@ -40,25 +40,25 @@ const MessageCard: React.FC<MessageCardProps> = ({
     <div className="w-full max-w-md mx-auto">
       <div 
         className={`birthday-card overflow-hidden transition-all duration-500 relative ${
-          isOpen ? 'h-96' : 'h-40'
+          isOpen ? 'h-[420px]' : 'h-48'
         }`}
         onClick={handleClick}
       >
         {/* Card cover */}
         <div 
-          className={`absolute inset-0 bg-birthday-purple p-6 flex flex-col items-center justify-center transition-transform duration-500 ${
+          className={`absolute inset-0 bg-birthday-purple p-8 flex flex-col items-center justify-center transition-transform duration-500 ${
             isOpen ? 'transform -translate-y-full' : ''
           }`}
         >
-          <h2 className="text-2xl font-birthday text-white mb-2">Happy Birthday!</h2>
+          <h2 className="text-3xl font-birthday text-white mb-3">Happy Birthday!</h2>
           <h3 className="text-xl text-white font-semibold">{name}</h3>
-          <p className="text-white/70 mt-2 text-center">
+          <p className="text-white/70 mt-3 text-center">
             {isOpen ? '' : 'Click to open your card'}
           </p>
         </div>
         
         {/* Card inside */}
-        <div className="absolute inset-0 bg-white p-6 flex flex-col items-center justify-center">
+        <div className="absolute inset-0 bg-white p-8 flex flex-col items-center justify-center">
           <div className="relative w-full h-full flex flex-col items-center justify-center">
             {hearts.map((heart, index) => (
               <div
